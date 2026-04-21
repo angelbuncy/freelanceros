@@ -53,7 +53,6 @@ export function DynamicBackground() {
         className="absolute inset-0 w-full h-full opacity-40"
         colors={LIGHT_WIREFRAME}
         speed={0.2}
-        wireframe="true"
       />
       
       {/* SVG Filters for glass/gooey effects IF needed globally, otherwise kept in hero-shader */}
