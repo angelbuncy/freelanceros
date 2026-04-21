@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -246,7 +246,7 @@ export default function ClientsPage() {
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           <div>
             <h1 className="text-3xl font-light text-slate-900 dark:text-white mb-1">Clients</h1>
-            <p className="text-gray-500 text-sm">Everyone you've done work for — and are owed by.</p>
+            <p className="text-gray-500 text-sm">Everyone you&apos;ve done work for — and are owed by.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <button

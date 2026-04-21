@@ -104,8 +104,8 @@ export async function POST(request: NextRequest) {
           errors.push(`${doc.id}: ${errText}`);
           continue;
         }
-      } catch (e: any) {
-        errors.push(`${doc.id}: ${e.message}`);
+      } catch (e: unknown) {
+        errors.push(`${doc.id}: ${e instanceof Error ? e.message : String(e)}`);
         continue;
       }
 
@@ -126,7 +126,8 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ ok: true, sent, errors });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Internal server error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

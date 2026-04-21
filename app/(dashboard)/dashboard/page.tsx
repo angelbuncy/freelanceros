@@ -53,7 +53,12 @@ export default function DashboardPage() {
   const [topClients, setTopClients] = useState<Client[]>([]);
   const [allClients, setAllClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
-  const [onboardingVisible, setOnboardingVisible] = useState(false);
+  const [onboardingVisible, setOnboardingVisible] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !localStorage.getItem("freelanceros_onboarding_dismissed");
+    }
+    return false;
+  });
 
   const loadDashboard = useCallback(async (uid: string, displayName: string | null, email: string | null) => {
     if (displayName) setUserName(displayName.split(" ")[0]);
@@ -88,12 +93,7 @@ export default function DashboardPage() {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!localStorage.getItem("freelanceros_onboarding_dismissed")) {
-      setOnboardingVisible(true);
-    }
-  }, []);
+
 
   const chartData = useMemo(() => {
     const paid = allClients.filter((c) => c.paid);

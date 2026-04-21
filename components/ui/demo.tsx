@@ -9,7 +9,7 @@ import { MeshGradient, DotOrbit } from "@paper-design/shaders-react";
  * Not rendered in production — use DynamicBackground in the dashboard layout.
  */
 export default function DemoOne() {
-  const [speed, setSpeed] = useState(0.4);
+  const speed = 0.4;
   const [activeEffect, setActiveEffect] = useState<"mesh" | "dots" | "combined">("mesh");
   const [copied, setCopied] = useState(false);
 

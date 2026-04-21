@@ -272,7 +272,7 @@ export default function RemindersPage() {
                   <tr><td colSpan={6} className="py-10 text-center">
                     <p className="text-gray-500 text-sm">No reminders sent yet.</p>
                     <p className="text-gray-400 text-xs mt-1">
-                      Reminders are sent automatically once a client's due date passes and you have credits.
+                      Reminders are sent automatically once a client&apos;s due date passes and you have credits.
                     </p>
                   </td></tr>
                 )}
@@ -314,7 +314,7 @@ export default function RemindersPage() {
             <div>
               <p className="text-sm font-semibold text-slate-900 dark:text-white mb-1">How reminders work</p>
               <p className="text-xs text-gray-500 leading-relaxed">
-                Once a client's due date passes, FreelancerOS automatically sends a{" "}
+                Once a client&apos;s due date passes, FreelancerOS automatically sends a{" "}
                 <span className="text-emerald-600 dark:text-emerald-400">polite</span> reminder every 2 days.
                 After the 2nd reminder it escalates to{" "}
                 <span className="text-amber-600 dark:text-yellow-400">firm</span>, then to a{" "}

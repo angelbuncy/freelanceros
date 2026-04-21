@@ -13,7 +13,6 @@ import {
   updateDoc,
   deleteDoc,
   addDoc,
-  orderBy,
 } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useDashboardSearch } from "@/components/providers/app-providers";
@@ -110,8 +109,8 @@ function NewProjectModal({
       const ref = await addDoc(collection(db, "projects"), payload);
       onCreated({ id: ref.id, ...payload });
       onClose();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "An error occurred");
     }
     setSaving(false);
   };

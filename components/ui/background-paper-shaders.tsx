@@ -16,7 +16,6 @@ export function DynamicBackground() {
   );
 
   useEffect(() => {
-    setIsDark(document.documentElement.classList.contains("dark"));
     const obs = new MutationObserver(() => {
       setIsDark(document.documentElement.classList.contains("dark"));
     });

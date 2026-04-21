@@ -23,7 +23,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   // 1. Set mounted to true once client-side code runs
   useEffect(() => {
-    setMounted(true);
+    setTimeout(() => setMounted(true), 0);
   }, []);
 
   useEffect(() => {

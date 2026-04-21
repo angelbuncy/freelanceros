@@ -63,8 +63,8 @@ export default function PaymentsPage() {
       setClients((prev) =>
         prev.map((c) => (c.id === id ? { ...c, paid: true, status: "paid", paid_at: paidAt } : c))
       );
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "An error occurred");
     }
     setActionId(null);
   };

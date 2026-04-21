@@ -1,10 +1,10 @@
-﻿"use client";
+"use client";
 
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase/client";
 import { onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 
 export default function NewClientPage() {
@@ -72,8 +72,8 @@ export default function NewClientPage() {
       }
 
       router.push("/clients");
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "An unknown error occurred");
       setLoading(false);
     }
   };

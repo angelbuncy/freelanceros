@@ -1,7 +1,7 @@
-﻿"use client";
+"use client";
 
 import { GlowCard } from "@/components/ui/spotlight-card";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase/client";
 import { onAuthStateChanged } from "firebase/auth";
@@ -69,8 +69,8 @@ export default function SettingsPage() {
       });
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Save failed");
     } finally {
       setSaving(false);
     }

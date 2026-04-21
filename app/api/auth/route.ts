@@ -27,9 +27,10 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Authentication failed";
     console.error("Auth Session Error:", error);
-    return NextResponse.json({ error: error.message }, { status: 401 });
+    return NextResponse.json({ error: message }, { status: 401 });
   }
 }
 

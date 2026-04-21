@@ -27,7 +27,7 @@ export async function getServerUser() {
   try {
     const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie, true);
     return decodedClaims;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

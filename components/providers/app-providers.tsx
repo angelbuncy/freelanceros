@@ -22,18 +22,22 @@ export function useDashboardSearch() {
 }
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("freelanceros_theme") as Theme | null;
+      if (stored === "light" || stored === "dark") return stored;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "dark"; // Defaulting to dark as per original logic
+    }
+    return "dark";
+  });
   const [mounted, setMounted] = useState(false);
   const [headerSearch, setHeaderSearch] = useState("");
 
   useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem("freelanceros_theme") as Theme | null;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initial: Theme = stored === "light" || stored === "dark" ? stored : prefersDark ? "dark" : "dark";
-    setThemeState(initial);
+    setTimeout(() => setMounted(true), 0);
+    const initial = theme;
     document.documentElement.classList.toggle("dark", initial === "dark");
-  }, []);
+  }, [theme]);
 
   const toggleTheme = useCallback(() => {
     setThemeState((t) => {

@@ -14,7 +14,7 @@ import { AnimatePresence, motion } from "framer-motion";
 // ── Variable token renderer ────────────────────────────────────────────────
 // Splits text on {{variable}} patterns and renders tokens as [variable] chips
 
-function TemplateText({ text, className = "" }: { text: string; className?: string }) {
+function TemplateText({ text }: { text: string }) {
   const parts = text.split(/({{[^}]+}})/g);
   return (
     <>

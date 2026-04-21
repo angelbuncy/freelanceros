@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 import { MeshGradient } from "@paper-design/shaders-react"
 
 interface ShaderBackgroundProps {
@@ -15,25 +15,8 @@ const GREEN_WIREFRAME = ["#000000", "#ffffff", "#10b981", "#000000"];
 
 export function ShaderBackground({ children }: ShaderBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [isActive, setIsActive] = useState(false)
 
-  useEffect(() => {
-    const handleMouseEnter = () => setIsActive(true)
-    const handleMouseLeave = () => setIsActive(false)
 
-    const container = containerRef.current
-    if (container) {
-      container.addEventListener("mouseenter", handleMouseEnter)
-      container.addEventListener("mouseleave", handleMouseLeave)
-    }
-
-    return () => {
-      if (container) {
-        container.removeEventListener("mouseenter", handleMouseEnter)
-        container.removeEventListener("mouseleave", handleMouseLeave)
-      }
-    }
-  }, [])
 
   return (
     <div ref={containerRef} className="min-h-[650px] w-full relative overflow-hidden">

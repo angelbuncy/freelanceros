@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { app, auth, db } from "@/lib/firebase/client";
+import { auth, db } from "@/lib/firebase/client";
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
@@ -23,9 +23,10 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const urlError = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("error") : null;
+  const [urlError, setUrlError] = useState<string | null>(null);
 
   useEffect(() => {
+    setUrlError(new URLSearchParams(window.location.search).get("error"));
     router.prefetch("/dashboard");
   }, [router]);
 
@@ -79,8 +80,8 @@ export default function AuthPage() {
       await handleCreateSession(idToken);
       
       router.push("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Signup failed. Please try again.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Signup failed. Please try again.");
       setLoading(false);
     }
   }
@@ -100,8 +101,8 @@ export default function AuthPage() {
       await handleCreateSession(idToken);
       
       router.push("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Login failed.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Login failed.");
       setLoading(false);
     }
   }
@@ -124,8 +125,8 @@ export default function AuthPage() {
       await handleCreateSession(idToken);
       
       router.push("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Google auth failed.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Google auth failed.");
       setLoading(false);
     }
   }
@@ -155,6 +156,7 @@ export default function AuthPage() {
             className="w-full p-4 bg-white/5 rounded-xl border border-transparent focus:border-emerald-400/60 focus:outline-none transition"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            suppressHydrationWarning
           />
         )}
 
@@ -163,6 +165,7 @@ export default function AuthPage() {
           className="w-full p-4 bg-white/5 rounded-xl border border-transparent focus:border-emerald-400/60 focus:outline-none transition"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          suppressHydrationWarning
         />
 
         <input
@@ -171,6 +174,7 @@ export default function AuthPage() {
           className="w-full p-4 bg-white/5 rounded-xl border border-transparent focus:border-emerald-400/60 focus:outline-none transition"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          suppressHydrationWarning
         />
 
         {error && <p className="text-red-400 text-sm">{error}</p>}

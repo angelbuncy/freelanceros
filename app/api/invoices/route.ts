@@ -12,7 +12,8 @@ export async function GET() {
     .orderBy("due_date", "asc")
     .get();
 
-  const data = snap.docs.map((d) => ({ id: d.id, ...d.data() })) as any[];
+  type InvoiceDoc = { id: string; paid?: boolean; amount?: number; [key: string]: unknown };
+  const data = snap.docs.map((d) => ({ id: d.id, ...d.data() })) as InvoiceDoc[];
 
   const pending = data.filter((c) => !c.paid);
   const paid = data.filter((c) => c.paid);
