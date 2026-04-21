@@ -1,0 +1,56 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if the user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper function to check if the user owns the document
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // Profiles collection
+    match /profiles/{userId} {
+      allow read, write: if isAuthenticated() && isOwner(userId);
+    }
+
+    // Clients collection
+    match /clients/{clientId} {
+      allow read, update, delete: if isAuthenticated() && isOwner(resource.data.user_id);
+      allow create: if isAuthenticated() && isOwner(request.resource.data.user_id);
+    }
+
+    // Projects collection
+    match /projects/{projectId} {
+      allow read, update, delete: if isAuthenticated() && isOwner(resource.data.user_id);
+      allow create: if isAuthenticated() && isOwner(request.resource.data.user_id);
+    }
+
+    // Reminders collection
+    match /reminders/{reminderId} {
+      allow read, update, delete: if isAuthenticated() && isOwner(resource.data.user_id);
+      allow create: if isAuthenticated() && isOwner(request.resource.data.user_id);
+    }
+
+    // Email Templates collection
+    match /email_templates/{templateId} {
+      allow read, update, delete: if isAuthenticated() && isOwner(resource.data.user_id);
+      allow create: if isAuthenticated() && isOwner(request.resource.data.user_id);
+    }
+
+    // Email logs (Read-only for the user)
+    match /email_logs/{logId} {
+      allow read: if isAuthenticated() && isOwner(resource.data.user_id);
+      allow write: if false; // Only server (Admin SDK) can write logs
+    }
+
+    // Processed payments (Idempotency check)
+    match /processed_payments/{paymentId} {
+      allow read: if isAuthenticated() && isOwner(resource.data.user_id);
+      allow write: if false; // Only server (Admin SDK) can write payments
+    }
+  }
+}
